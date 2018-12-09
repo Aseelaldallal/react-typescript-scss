@@ -1,4 +1,5 @@
 import * as React from "react";
+import classes from './Layout.scss';
 
 export interface ILayoutProps  { 
    children: React.ReactNode
@@ -7,7 +8,7 @@ export interface ILayoutProps  {
 const layout = (props: ILayoutProps) => (
     <>
         <div>Toolbar, SideDrawer, Backdrop</div>
-        <main>
+        <main className={classes.Content}>
             {props.children}
         </main>
     </>
