@@ -12,22 +12,25 @@ export interface IBurgerProps {
 }
 
 const burger = (props: IBurgerProps) => {
-    const transformedIngredients = Object.keys(props.ingredients).reduce(
-        (accumulator, currentIngredient) => {
-            const amount = props.ingredients[currentIngredient];
-            const burgerIngredients = [];
-            for (let i = 0; i < amount; i++) {
-                burgerIngredients.push(
-                    <BurgerIngredient
-                        type={currentIngredient}
-                        key={currentIngredient + i}
-                    />
-                );
-            }
-            return [...accumulator, ...burgerIngredients];
-        },
-        []
-    );
+    let transformedIngredients: JSX.Element | JSX.Element[] = Object.keys(
+        props.ingredients
+    ).reduce((accumulator, currentIngredient) => {
+        const amount = props.ingredients[currentIngredient];
+        const burgerIngredients = [];
+        for (let i = 0; i < amount; i++) {
+            burgerIngredients.push(
+                <BurgerIngredient
+                    type={currentIngredient}
+                    key={currentIngredient + i}
+                />
+            );
+        }
+        return [...accumulator, ...burgerIngredients];
+    }, []);
+
+    if (transformedIngredients.length === 0) {
+        transformedIngredients = <p> Please Start Adding Ingredients</p>;
+    }
 
     return (
         <div className={classes.Burger}>
