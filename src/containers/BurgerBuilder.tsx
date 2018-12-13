@@ -9,14 +9,24 @@ const INGREDIENT_PRICES = {
     salad: 0.5
 };
 
+type IngredientName = "salad" | "bacon" | "cheese" | "meat";
+export type Ingredients = Record<IngredientName, number>;
+
+interface IState {
+    ingredients: Ingredients;
+    purchaseable: boolean;
+    totalPrice: number;
+}
+
 class BurgerBuilder extends React.Component {
-    state = {
+    state: IState = {
         ingredients: {
             bacon: 0,
             cheese: 0,
             meat: 0,
             salad: 0
         },
+        purchaseable: false,
         totalPrice: 4
     };
 
@@ -30,6 +40,7 @@ class BurgerBuilder extends React.Component {
             ingredients: updatedIngredients,
             totalPrice: newPrice
         });
+        this.updatePurchaseState(updatedIngredients);
     };
 
     removeIngredientHandler = (type: string) => {
@@ -43,13 +54,23 @@ class BurgerBuilder extends React.Component {
                 ingredients: updatedIngredients,
                 totalPrice: newPrice
             });
+            this.updatePurchaseState(updatedIngredients);
         }
     };
+
+    updatePurchaseState(ingredients: any) {
+        const sum = Object.keys(ingredients).reduce(
+            (accumulator, currentIngredient) => {
+                return accumulator + ingredients[currentIngredient];
+            },
+            0
+        );
+        this.setState({ purchaseable: sum > 0 });
+    }
 
     render() {
         const disabledInfo = Object.keys(this.state.ingredients).reduce(
             (accumulator, ingredient) => {
-                console.log(this.state.ingredients);
                 accumulator[ingredient] =
                     this.state.ingredients[ingredient] < 1;
                 return accumulator;
@@ -64,6 +85,8 @@ class BurgerBuilder extends React.Component {
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
+                    purchaseable={this.state.purchaseable}
+                    price={this.state.totalPrice}
                 />
             </>
         );

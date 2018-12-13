@@ -12,13 +12,18 @@ const controls = [
 export interface IBuildControlsProps {
     ingredientAdded: (type: string) => void;
     ingredientRemoved: (type: string) => void;
+    purchaseable: boolean;
     disabled: {
         [key: string]: boolean;
     };
+    price: number;
 }
 
 const buildControls = (props: IBuildControlsProps) => (
     <div className={classes.BuildControls}>
+        <p>
+            Current Price: <strong>{props.price}</strong>
+        </p>
         {controls.map(ctrl => (
             <BuildControl
                 key={ctrl.label}
@@ -28,6 +33,9 @@ const buildControls = (props: IBuildControlsProps) => (
                 disabled={props.disabled[ctrl.type]}
             />
         ))}
+        <button disabled={!props.purchaseable} className={classes.OrderButton}>
+            ORDER NOW
+        </button>
     </div>
 );
 

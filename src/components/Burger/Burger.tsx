@@ -1,14 +1,18 @@
 import * as React from "react";
+import { Ingredients } from "../../containers/BurgerBuilder";
 import classes from "./Burger.scss";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 export interface IBurgerProps {
-    ingredients: {
-        salad?: number;
-        bacon?: number;
-        cheese?: number;
-        meat?: number;
-    };
+    ingredients: Ingredients;
+
+    // {
+
+    //     salad?: number;
+    //     bacon?: number;
+    //     cheese?: number;
+    //     meat?: number;
+    // };
 }
 
 const burger = (props: IBurgerProps) => {
