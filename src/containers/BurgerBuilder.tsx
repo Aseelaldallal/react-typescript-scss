@@ -76,6 +76,10 @@ class BurgerBuilder extends React.Component {
         this.setState({ purchasing: true });
     };
 
+    purchaseCancelHandler = () => {
+        this.setState({ purchasing: false });
+    };
+
     render() {
         const disabledInfo = Object.keys(this.state.ingredients).reduce(
             (accumulator, ingredient) => {
@@ -88,7 +92,10 @@ class BurgerBuilder extends React.Component {
 
         return (
             <>
-                <Modal show={this.state.purchasing}>
+                <Modal
+                    show={this.state.purchasing}
+                    modalClosed={this.purchaseCancelHandler}
+                >
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
