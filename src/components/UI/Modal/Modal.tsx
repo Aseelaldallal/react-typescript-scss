@@ -1,26 +1,39 @@
-import * as React from "react";
-import Backdrop from "../Backdrop/Backdrop";
-import classes from "./Modal.scss";
+import * as React from 'react';
+import Backdrop from '../Backdrop/Backdrop';
+import classes from './Modal.scss';
 
 export interface IModalProps {
-    children: React.ReactNode;
-    modalClosed: () => void;
-    show: boolean;
+	children: React.ReactNode;
+	modalClosed: () => void;
+	show: boolean;
 }
 
-const modal = (props: IModalProps) => (
-    <>
-        <Backdrop show={props.show} clicked={props.modalClosed} />
-        <div
-            className={classes.Modal}
-            style={{
-                opacity: props.show ? 1 : 0,
-                transform: props.show ? "translateY(0)" : "translateY(-100vh)"
-            }}
-        >
-            {props.children}
-        </div>
-    </>
-);
+class Modal extends React.Component<IModalProps> {
+	shouldComponentUpdate(nextProps: IModalProps) {
+		return nextProps.show !== this.props.show;
+	}
 
-export default modal;
+	render() {
+		return (
+			<>
+				<Backdrop
+					show={this.props.show}
+					clicked={this.props.modalClosed}
+				/>
+				<div
+					className={classes.Modal}
+					style={{
+						opacity: this.props.show ? 1 : 0,
+						transform: this.props.show
+							? 'translateY(0)'
+							: 'translateY(-100vh)'
+					}}
+				>
+					{this.props.children}
+				</div>
+			</>
+		);
+	}
+}
+
+export default Modal;
