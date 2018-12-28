@@ -3,16 +3,43 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 import classes from './Layout.scss';
 
-export interface ILayoutProps {
+interface ILayoutState {
+	showSideDrawer: boolean;
+}
+
+interface ILayoutProps {
 	children: React.ReactNode;
 }
 
-const layout = (props: ILayoutProps) => (
-	<>
-		<Toolbar />
-		<SideDrawer />
-		<main className={classes.Content}>{props.children}</main>
-	</>
-);
+class Layout extends React.Component<ILayoutProps, ILayoutState> {
+	state: Readonly<ILayoutState> = {
+		showSideDrawer: false
+	};
 
-export default layout;
+	sideDrawerClosedHandler = () => {
+		this.setState({ showSideDrawer: false });
+	};
+
+	sideDrawerToggleHandler = () => {
+		this.setState(prevState => {
+			return {
+				showSideDrawer: !prevState.showSideDrawer
+			};
+		});
+	};
+
+	render() {
+		return (
+			<>
+				<Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+				<SideDrawer
+					open={this.state.showSideDrawer}
+					closed={this.sideDrawerClosedHandler}
+				/>
+				<main className={classes.Content}>{this.props.children}</main>
+			</>
+		);
+	}
+}
+
+export default Layout;
