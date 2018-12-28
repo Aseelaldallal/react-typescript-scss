@@ -1,0 +1,17 @@
+import * as React from 'react';
+import Logo from '../../Logo/Logo';
+import classes from './Toolbar.scss';
+
+// export interface IToolbarProps {}
+
+const toolbar = () => {
+	return (
+		<header className={classes.Toolbar}>
+			<div>MENU</div>
+			<Logo />
+			<nav>...</nav>
+		</header>
+	);
+};
+
+export default toolbar;
