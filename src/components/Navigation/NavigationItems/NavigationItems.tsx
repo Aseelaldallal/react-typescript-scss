@@ -4,7 +4,7 @@ import classes from './NavigationItems.scss';
 
 const navigationItems = () => {
 	return (
-		<ul>
+		<ul className={classes.NavigationItems}>
 			<NavigationItem link="/" active={true}>
 				BurgerBuilder
 			</NavigationItem>
