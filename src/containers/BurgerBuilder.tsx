@@ -24,6 +24,7 @@ interface IState {
 	totalPrice: number;
 	purchasing: boolean;
 	loading: boolean;
+	error: boolean;
 }
 
 class BurgerBuilder extends React.Component {
@@ -32,7 +33,8 @@ class BurgerBuilder extends React.Component {
 		purchaseable: false,
 		purchasing: false,
 		totalPrice: 4,
-		loading: false
+		loading: false,
+		error: false
 	};
 
 	async componentDidMount() {
@@ -42,7 +44,7 @@ class BurgerBuilder extends React.Component {
 				ingredients: response.data
 			});
 		} catch (e) {
-			console.log(e);
+			this.setState({ error: true });
 		}
 	}
 
@@ -113,7 +115,6 @@ class BurgerBuilder extends React.Component {
 			console.log(response);
 			this.setState({ loading: false, purchasing: false });
 		} catch (e) {
-			console.log(e);
 			this.setState({ loading: false, purchasing: false });
 		}
 	};
@@ -129,14 +130,15 @@ class BurgerBuilder extends React.Component {
 		);
 
 		let orderSummary = null;
-
-		let burger = (this.state as any).error ? (
+		console.log('State.error: ', this.state.error);
+		let burger = this.state.error ? (
 			<p>Ingredients can't be loaded!</p>
 		) : (
 			<Spinner />
 		);
-
-		if (this.state.ingredients) {
+		console.log('The burger: ', burger);
+		if (this.state.ingredients !== {}) {
+			console.log('We will modify the burger now');
 			burger = (
 				<>
 					<Burger ingredients={this.state.ingredients} />
