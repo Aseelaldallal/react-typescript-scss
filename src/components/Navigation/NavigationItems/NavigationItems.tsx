@@ -6,9 +6,9 @@ const navigationItems = () => {
 	return (
 		<ul className={classes.NavigationItems}>
 			<NavigationItem link="/" active={true}>
-				BurgerBuilder
+				Burger
 			</NavigationItem>
-			<NavigationItem link="/">Checkout</NavigationItem>
+			<NavigationItem link="/">Order Summary</NavigationItem>
 		</ul>
 	);
 };

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import Logo from '../../Logo/Logo';
+// import Logo from '../../Logo/Logo';
 import classes from './SideDrawer.scss';
 
 interface ISideDrawerProps {
@@ -19,9 +19,6 @@ const sideDrawer = (props: ISideDrawerProps) => {
 		<>
 			<Backdrop show={props.open} clicked={props.closed} />
 			<div className={attachedClasses.join(' ')}>
-				<div className={classes.Logo}>
-					<Logo />
-				</div>
 				<nav>
 					<NavigationItems />
 				</nav>
