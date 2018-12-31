@@ -10,7 +10,10 @@ export interface IModalProps {
 
 class Modal extends React.Component<IModalProps> {
 	shouldComponentUpdate(nextProps: IModalProps) {
-		return nextProps.show !== this.props.show;
+		return (
+			nextProps.show !== this.props.show ||
+			nextProps.children !== this.props.children
+		);
 	}
 
 	render() {
