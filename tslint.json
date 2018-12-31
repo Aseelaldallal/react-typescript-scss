@@ -5,7 +5,8 @@
 		"no-console": [true, "warning"],
 		"jsx-no-lambda": false,
 		"forin": false,
-		"ordered-imports": false
+		"ordered-imports": false,
+		"object-literal-sort-keys": false
 	},
 	"linterOptions": {
 		"exclude": [
