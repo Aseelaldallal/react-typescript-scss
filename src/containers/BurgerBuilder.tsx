@@ -14,8 +14,9 @@ const INGREDIENT_PRICES = {
 	salad: 0.5
 };
 
-type IngredientName = 'salad' | 'bacon' | 'cheese' | 'meat';
-export type Ingredients = Record<IngredientName, number>;
+export interface Ingredients {
+	[index: string]: number;
+}
 
 interface IState {
 	ingredients: Ingredients;
@@ -27,17 +28,23 @@ interface IState {
 
 class BurgerBuilder extends React.Component {
 	state: IState = {
-		ingredients: {
-			bacon: 0,
-			cheese: 0,
-			meat: 0,
-			salad: 0
-		},
+		ingredients: {},
 		purchaseable: false,
 		purchasing: false,
 		totalPrice: 4,
 		loading: false
 	};
+
+	async componentDidMount() {
+		try {
+			const response = await axios.get('/ingredients.json');
+			this.setState({
+				ingredients: response.data
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	addIngredientHandler = (type: string) => {
 		const oldCount = this.state.ingredients[type];
@@ -122,7 +129,7 @@ class BurgerBuilder extends React.Component {
 		);
 
 		let orderSummary = null;
-		console.log(this.state);
+
 		let burger = (this.state as any).error ? (
 			<p>Ingredients can't be loaded!</p>
 		) : (
